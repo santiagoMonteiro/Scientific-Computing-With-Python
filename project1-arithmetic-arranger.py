@@ -53,18 +53,30 @@ def arithmetic_arranger(problems, show_answers=False):
         ceil_spaces = ""
         floor_spaces = ""
         difference = abs(end_arrange[i][4] - end_arrange[i][5])
+        dash = ""
 
         if end_arrange[i][4] > end_arrange[i][5]:
             floor_spaces += difference * " "
+            dash += (2 + end_arrange[i][4]) * "-"
         elif end_arrange[i][4] < end_arrange[i][5]:
             ceil_spaces += difference * " "
+            dash = (2 + end_arrange[i][5]) * "-"
+        else:
+            dash = (2 + end_arrange[i][5]) * "-"
 
         if i == 0:
             ceil += ceil_spaces + (2) * " " + end_arrange[i][0]
+            floor += end_arrange[i][3] + " " + floor_spaces + end_arrange[i][1]
+            dashes += dash
         else:
             ceil += ceil_spaces + (4 + 2) * " " + end_arrange[i][0]
+            floor += 4 * " " + end_arrange[i][3] + " " + floor_spaces + end_arrange[i][1]
+            dashes += 4 * " " + dash
+        print(dash)
 
     print(ceil)
+    print(floor)
+    print(dashes)
 
     # return problems
 
