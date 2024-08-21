@@ -2,8 +2,7 @@ def arithmetic_arranger(problems, show_answers=False):
     end_arrange = []
 
     if len(problems) > 5:
-        print("Error: Too many problems.")
-        return
+        return "Error: Too many problems."
 
     for p in problems:
         if "+" in p:
@@ -11,8 +10,7 @@ def arithmetic_arranger(problems, show_answers=False):
         elif "-" in p:
             operator = "-"
         else:
-            print("Error: Operator must be '+' or '-'.")
-            return
+            return "Error: Operator must be '+' or '-'."
 
         operands = [o.strip() for o in p.split(operator)]
 
@@ -20,29 +18,25 @@ def arithmetic_arranger(problems, show_answers=False):
 
         for o in operands:
             if len(o) > 4:
-                print("Error: Numbers cannot be more than four digits.")
-                return
+                return "Error: Numbers cannot be more than four digits."
             for char in o:
                 if char not in char_numbers:
-                    print("Error: Numbers must only contain digits.")
-                    return
+                    return "Error: Numbers must only contain digits."
 
         end_arrange.append(
             [
                 operands[0],
                 operands[1],
                 (
-                    int(operands[0]) + int(operands[1])
+                    str(int(operands[0]) + int(operands[1]))
                     if operator == "+"
-                    else int(operands[0]) - int(operands[1])
+                    else str(int(operands[0]) - int(operands[1]))
                 ),
                 operator,
                 len(operands[0]),
                 len(operands[1]),
             ]
         )
-
-    print(end_arrange)
 
     ceil = f""
     floor = f""
@@ -68,18 +62,19 @@ def arithmetic_arranger(problems, show_answers=False):
             ceil += ceil_spaces + (2) * " " + end_arrange[i][0]
             floor += end_arrange[i][3] + " " + floor_spaces + end_arrange[i][1]
             dashes += dash
+            result += (len(dash) - len(end_arrange[i][2])) * " " + end_arrange[i][2]
         else:
             ceil += ceil_spaces + (4 + 2) * " " + end_arrange[i][0]
             floor += 4 * " " + end_arrange[i][3] + " " + floor_spaces + end_arrange[i][1]
             dashes += 4 * " " + dash
-        print(dash)
+            result += 4 * " " + (len(dash) - len(end_arrange[i][2])) * " " + end_arrange[i][2]
+        
 
-    print(ceil)
-    print(floor)
-    print(dashes)
+    
 
-    # return problems
+    if show_answers:
+        return f"{ceil}\n{floor}\n{dashes}\n{result}"
+    else:
+        return f"{ceil}\n{floor}\n{dashes}"
 
-
-# print(f'\n{arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])}')
-arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"], True)
+print(arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"], True))
